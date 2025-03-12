@@ -10,7 +10,6 @@
   <div id="game-container">
     <div id="score">Счет: 0</div>
     <div id="game-over" class="hidden">Игра окончена! <br> Тапните для перезапуска</div>
-    <!-- Добавляем визуальные зоны для управления (опционально) -->
     <div id="touch-zones" class="hidden-on-desktop">
       <div class="zone up"></div>
       <div class="zone down"></div>
@@ -19,8 +18,10 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/threejs-build@71.0.0/build/three.min.js"></script>
-    <script type="module">
+  <!-- Подключаем Three.js как глобальную библиотеку -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/three.min.js"></script>
+  <!-- Используем type="module" только для нашего кода -->
+  <script type="module">
     import './main.js';
   </script>
 </body>
