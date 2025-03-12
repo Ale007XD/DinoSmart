@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  -webkit-user-select: none; /* Отключаем выделение текста на мобильных */
+  user-select: none;
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  touch-action: none; /* Отключаем стандартные жесты браузера */
+}
+
+#score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 24px;
+  z-index: 100;
+}
+
+#game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Стили для зон управления (опционально) */
+#touch-zones {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none; /* Пропускаем события через зоны */
+}
+
+.zone {
+  position: absolute;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.zone.up {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 33%;
+  background: rgba(0, 255, 0, 0.2);
+}
+
+.zone.down {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33%;
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.zone.left {
+  top: 0;
+  left: 0;
+  width: 33%;
+  height: 100%;
+  background: rgba(0, 0, 255, 0.2);
+}
+
+.zone.right {
+  top: 0;
+  right: 0;
+  width: 33%;
+  height: 100%;
+  background: rgba(255, 255, 0, 0.2);
+}
+
+.hidden-on-desktop {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hidden-on-desktop {
+    display: none; /* Скрываем зоны на десктопе */
+  }
+}
