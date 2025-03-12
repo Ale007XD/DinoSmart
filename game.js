@@ -54,8 +54,8 @@ export class Game {
 
   setupTouchControls() {
     const gameContainer = document.getElementById('game-container');
+    const rect = gameContainer.getBoundingClientRect(); // Получаем позицию контейнера
 
-    // Обработка начала касания
     gameContainer.addEventListener('touchstart', (event) => {
       event.preventDefault();
       if (this.isGameOver) {
@@ -64,38 +64,40 @@ export class Game {
       }
 
       const touch = event.touches[0];
-      const x = touch.clientX;
-      const y = touch.clientY;
-
+      const x = touch.clientX - rect.left; // Учитываем смещение контейнера
+      const y = touch.clientY - rect.top;
+      console.log(`Touch start: x=${x}, y=${y}`); // Отладка
       this.handleTouch(x, y);
     }, { passive: false });
 
-    // Обработка движения пальца
     gameContainer.addEventListener('touchmove', (event) => {
       event.preventDefault();
       const touch = event.touches[0];
-      const x = touch.clientX;
-      const y = touch.clientY;
-
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      console.log(`Touch move: x=${x}, y=${y}`); // Отладка
       this.handleTouch(x, y);
     }, { passive: false });
 
-    // Обработка окончания касания
     gameContainer.addEventListener('touchend', (event) => {
       event.preventDefault();
       this.controls.up = false;
       this.controls.down = false;
       this.controls.left = false;
       this.controls.right = false;
+      console.log('Touch end'); // Отладка
     }, { passive: false });
 
-    // Поддержка мыши для тестирования на десктопе
+    // Поддержка мыши для тестирования
     gameContainer.addEventListener('mousedown', (event) => {
       if (this.isGameOver) {
         this.restartGame();
         return;
       }
-      this.handleTouch(event.clientX, event.clientY);
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      console.log(`Mouse down: x=${x}, y=${y}`); // Отладка
+      this.handleTouch(x, y);
     });
 
     gameContainer.addEventListener('mouseup', () => {
@@ -103,9 +105,9 @@ export class Game {
       this.controls.down = false;
       this.controls.left = false;
       this.controls.right = false;
+      console.log('Mouse up'); // Отладка
     });
 
-    // Обработка изменения размера окна
     window.addEventListener('resize', () => {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -119,24 +121,21 @@ export class Game {
     const thirdWidth = this.width / 3;
     const thirdHeight = this.height / 3;
 
-    // Сбрасываем все состояния
     this.controls.up = false;
     this.controls.down = false;
     this.controls.left = false;
     this.controls.right = false;
 
-    // Вертикальные зоны
     if (y < thirdHeight) {
-      this.controls.up = true; // Верхняя треть экрана
+      this.controls.up = true;
     } else if (y > this.height - thirdHeight) {
-      this.controls.down = true; // Нижняя треть экрана
+      this.controls.down = true;
     }
 
-    // Горизонтальные зоны
     if (x < thirdWidth) {
-      this.controls.left = true; // Левая треть экрана
+      this.controls.left = true;
     } else if (x > this.width - thirdWidth) {
-      this.controls.right = true; // Правая треть экрана
+      this.controls.right = true;
     }
   }
 
@@ -185,4 +184,4 @@ export class Game {
     
     this.renderer.render(this.scene, this.camera);
   }
-}
+        }
